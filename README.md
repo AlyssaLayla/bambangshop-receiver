@@ -68,16 +68,16 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
     -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 2: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Commit: `Implement receive_notification function in Notification service.`
-    -   [ ] Commit: `Implement receive function in Notification controller.`
-    -   [ ] Commit: `Implement list_messages function in Notification service.`
-    -   [ ] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [x] Commit: `Create Notification service struct skeleton.`
+    -   [x] Commit: `Implement subscribe function in Notification service.`
+    -   [x] Commit: `Implement subscribe function in Notification controller.`
+    -   [x] Commit: `Implement unsubscribe function in Notification service.`
+    -   [x] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [x] Commit: `Implement receive_notification function in Notification service.`
+    -   [x] Commit: `Implement receive function in Notification controller.`
+    -   [x] Commit: `Implement list_messages function in Notification service.`
+    -   [x] Commit: `Implement list function in Notification controller.`
+    -   [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -92,3 +92,11 @@ This is the place for you to write reflections:
 - Dalam BambangShop, saya menggunakan lazy_static untuk mendefinisikan Vec dan DashMap sebagai variabel statis karena Rust memiliki sistem kepemilikan (ownership) yang lebih ketat dibandingkan Java. Di Java, kita bisa mengubah isi variabel statis melalui metode statis karena Java menggunakan garbage collector untuk menangani memory management secara otomatis. Namun, Rust tidak mengizinkan mutasi langsung pada variabel statis karena itu bisa menyebabkan kondisi race tanpa mekanisme pengaman yang eksplisit. Oleh karena itu, saya menggunakan lazy_static agar variabel statis dapat diinisialisasi dengan tipe data yang memiliki mekanisme mutasi yang aman, seperti RwLock<>, sehingga saya tetap bisa memodifikasi data dalam konteks multi-threading tanpa melanggar aturan kepemilikan Rust.
 
 #### Reflection Subscriber-2
+1. Have you explored things outside of the steps in the tutorial, for example: src/lib.rs? If not, explain why you did not do so. If yes, explain things that you have learned from those other parts of code.
+- Saya telah mengeksplorasi src/lib.rs, Cargo.toml, dan Rocket.toml untuk memahami bagaimana aplikasi ini diatur dan dikonfigurasi. Dari lib.rs, saya memahami bahwa file ini bertindak sebagai entry point utama yang mengatur modularitas aplikasi dengan mengekspor berbagai fungsi dan struktur yang digunakan di bagian lain dari sistem. Dalam Cargo.toml, saya mempelajari bagaimana dependensi dikelola, terutama terkait dengan penggunaan tokio, reqwest, dan rocket yang berperan penting dalam menangani asynchronous programming dan HTTP requests. Sementara itu, eksplorasi Rocket.toml membantu saya memahami bagaimana konfigurasi aplikasi, seperti port dan environment variables, dapat diubah untuk menjalankan beberapa instance Receiver app secara bersamaan. Pemahaman ini mempermudah saya dalam menyesuaikan dan mengoptimalkan layanan notifikasi agar berjalan lebih efisien dan sesuai dengan kebutuhan BambangShop.
+
+2. Since you have completed the tutorial by now and have tried to test your notification system by spawning multiple instances of Receiver, explain how Observer pattern eases you to plug in more subscribers. How about spawning more than one instance of Main app, will it still be easy enough to add to the system?
+- Observer pattern memudahkan saya menambahkan lebih banyak subscriber dalam BambangShop karena setiap subscriber hanya perlu berlangganan produk tertentu, dan sistem akan otomatis mengirim notifikasi saat ada perubahan terkait produk tersebut. Proses ini terisolasi dengan baik, sehingga menambahkan subscriber baru tidak mempengaruhi sistem secara keseluruhan. Namun, jika saya ingin menambahkan lebih dari satu instance Main app, saya perlu memastikan bahwa setiap instance bisa mengakses daftar subscriber yang sama dan tidak menyebabkan inkonsistensi dalam pengiriman notifikasi. Hal ini memerlukan penyesuaian dalam cara penyimpanan subscriber, misalnya dengan menggunakan penyimpanan terpusat atau database yang dapat diakses oleh semua instance Main app.
+
+3. Have you tried to make your own Tests, or enhance documentation on your Postman collection? If you have tried those features, tell us whether it is useful for your work (it can be your tutorial work or your Group Project).
+- Sejauh ini, saya belum membuat tes atau meningkatkan dokumentasi pada Postman collection saya. Namun, saya menyadari bahwa hal ini bisa sangat berguna untuk memastikan bahwa aplikasi berjalan sesuai dengan yang diharapkan. Mengingat Postman memungkinkan kita untuk berinteraksi dengan aplikasi melalui pengiriman request yang dapat dilengkapi dengan token, request body, dan parameter lainnya, maka mendokumentasikan dan menguji berbagai skenario akan sangat membantu dalam mengevaluasi respons aplikasi terhadap request tertentu. Dengan adanya tes dan dokumentasi yang lebih baik, saya dapat lebih mudah memverifikasi apakah sistem notifikasi di BambangShop sudah bekerja sebagaimana mestinya serta mengidentifikasi potensi masalah lebih awal sebelum diterapkan dalam lingkungan produksi.
